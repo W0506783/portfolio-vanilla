@@ -215,6 +215,50 @@ function setYear() {
   document.getElementById('year').textContent = new Date().getFullYear();
 }
 
+// ─── GitHub API ───────────────────────────────────────────────────────────────
+
+async function loadRepos(username) {
+  const status = document.getElementById('github-status');
+  const grid   = document.getElementById('github-grid');
+
+  status.textContent = 'Loading repositories...';
+
+  try {
+    const res = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`);
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+
+    const repos = await res.json();
+
+    status.textContent = '';
+
+    if (repos.length === 0) {
+      status.textContent = 'No public repositories found.';
+      return;
+    }
+
+    repos.forEach(repo => {
+      const card = document.createElement('div');
+      card.className = 'rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 flex flex-col gap-3';
+
+      card.innerHTML = `
+        <h3 class="font-semibold text-gray-900 dark:text-white">${repo.name}</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 flex-1">${repo.description ?? 'No description provided.'}</p>
+        <div class="flex items-center justify-between text-xs text-gray-400 dark:text-gray-600">
+          <span>${repo.language ?? 'Unknown'}</span>
+          <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer"
+            class="text-indigo-500 hover:text-indigo-400 transition-colors">View Repo</a>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+
+  } catch (err) {
+    status.textContent = 'Could not load repositories. Please try again later.';
+    console.error(err);
+  }
+}
+
 // ─── Audio ────────────────────────────────────────────────────────────────────
 
 function initAudio() {
@@ -304,3 +348,4 @@ setYear();
 
 const startAudio = initAudio();
 initSplash(startAudio);
+loadRepos('W0506783');
