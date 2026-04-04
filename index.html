@@ -1,30 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dylan MacKinnon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet" />
   <link rel="icon" href="images/favicon.svg" />
   <link rel="stylesheet" href="dist/output.css" />
   <style>
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
   </style>
 </head>
+
 <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300">
 
+  <!-- Splash Modal -->
+  <div id="splash" class="fixed inset-0 z-100 flex items-center justify-center bg-gray-950">
+    <div class="text-center">
+      <h1 class="font-display text-5xl sm:text-6xl font-bold text-white mb-2">Dylan MacKinnon</h1>
+      <p class="text-lg text-gray-400 mb-10">Digital Solutions Specialist</p>
+      <button id="splash-enter"
+        class="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-medium transition-colors">
+        Enter
+      </button>
+    </div>
+  </div>
+
   <!-- Nav -->
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+  <nav
+    class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur border-b border-gray-200 dark:border-gray-800">
     <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
       <span class="font-semibold tracking-tight text-gray-900 dark:text-white">Dylan</span>
       <div class="flex items-center gap-6">
-        <a href="#projects" class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Projects</a>
-        <a href="#about" class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">About</a>
-        <a href="#contact" class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Contact</a>
-        <button
-          id="dark-toggle"
-          aria-label="Toggle dark mode"
-          class="w-8 h-8 flex items-center justify-center rounded-full text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-        >🌙</button>
+        <a href="#projects"
+          class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Projects</a>
+        <a href="#about"
+          class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">About</a>
+        <a href="#contact"
+          class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Contact</a>
+        <button id="mute-toggle" aria-label="Toggle mute"
+          class="w-8 h-8 flex items-center justify-center rounded-full text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">🔊</button>
+        <input id="volume-slider" type="range" min="0" max="1" step="0.05" value="0.5" aria-label="Volume"
+          class="w-20 accent-indigo-500" />
+        <button id="dark-toggle" aria-label="Toggle dark mode"
+          class="w-8 h-8 flex items-center justify-center rounded-full text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">🌙</button>
       </div>
     </div>
   </nav>
@@ -37,20 +62,23 @@
         <!-- Text -->
         <div class="flex-1">
           <p class="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-3 tracking-wide uppercase">
-            Developer &amp; Designer
+            Digital Solutions Specialist
           </p>
-          <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white leading-tight mb-6">
+          <h1 class="font-display text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white leading-tight mb-6">
             Hi, I'm Dylan.
           </h1>
           <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed mb-10">
-            I build web apps, design experiences, and collaborate on projects
-            that matter — from capstone platforms to client websites.
+            I build web apps, design thoughtful user experiences, and turn data into clarity.
+            I’m a hands-on problem solver who enjoys fixing things, troubleshooting systems,
+            and collaborating on projects that make an impact.
           </p>
           <div class="flex gap-4 flex-wrap">
-            <a href="#projects" class="px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
+            <a href="#projects"
+              class="px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
               View Projects
             </a>
-            <a href="#contact" class="px-6 py-3 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:border-gray-500 dark:hover:border-gray-500 transition-colors">
+            <a href="#contact"
+              class="px-6 py-3 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:border-gray-500 dark:hover:border-gray-500 transition-colors">
               Say Hello
             </a>
           </div>
@@ -58,11 +86,8 @@
 
         <!-- Headshot -->
         <div class="shrink-0">
-          <img
-            src="images/headshot.png"
-            alt="Dylan MacKinnon"
-            class="w-48 h-48 md:w-56 md:h-56 rounded-full object-cover object-top shadow-lg border-4 border-white dark:border-gray-800"
-          />
+          <img src="images/headshot.png" alt="Dylan MacKinnon"
+            class="w-48 h-48 md:w-56 md:h-56 rounded-full object-cover object-top shadow-lg border-4 border-white dark:border-gray-800" />
         </div>
 
       </div>
@@ -72,7 +97,7 @@
   <!-- Projects -->
   <section id="projects" class="py-24 px-6">
     <div class="max-w-5xl mx-auto">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Projects</h2>
+      <h2 class="font-display text-3xl font-bold text-gray-900 dark:text-white mb-2">Projects</h2>
       <p class="text-gray-500 dark:text-gray-400 mb-12">A mix of client work, apps, and collaborative builds.</p>
 
       <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-6"></div>
@@ -83,23 +108,23 @@
   <section id="about" class="bg-gray-50 dark:bg-gray-900/50 overflow-hidden">
 
     <!-- Top: moody photo + bio -->
-    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-stretch min-h-[30rem]">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-stretch min-h-120">
 
       <!-- Photo -->
       <div class="relative w-full md:w-80 shrink-0 min-h-64 md:min-h-0">
-        <img
-          src="images/moody.png"
-          alt=""
-          aria-hidden="true"
-          class="absolute inset-0 w-full h-full object-cover object-center grayscale"
-        />
-        <div class="absolute inset-0 bg-linear-to-r from-transparent via-transparent to-gray-50 dark:to-gray-900 hidden md:block"></div>
-        <div class="absolute inset-0 bg-linear-to-t from-gray-50 dark:from-gray-900 via-transparent to-transparent md:hidden"></div>
+        <img src="images/moody.png" alt="" aria-hidden="true"
+          class="absolute inset-0 w-full h-full object-cover object-center grayscale" />
+        <div
+          class="absolute inset-0 bg-linear-to-r from-transparent via-transparent to-gray-50 dark:to-gray-900 hidden md:block">
+        </div>
+        <div
+          class="absolute inset-0 bg-linear-to-t from-gray-50 dark:from-gray-900 via-transparent to-transparent md:hidden">
+        </div>
       </div>
 
       <!-- Bio -->
       <div class="flex-1 flex flex-col justify-center px-6 py-16 md:pl-12 md:pr-0">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">About Me</h2>
+        <h2 class="font-display text-3xl font-bold text-gray-900 dark:text-white mb-6">About Me</h2>
         <div class="space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed max-w-prose">
           <p>
             I have been behind a keyboard for over 30 years. It started as curiosity
@@ -126,7 +151,7 @@
 
     <!-- Skills -->
     <div class="max-w-5xl mx-auto px-6 pb-20 pt-2">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Skills</h2>
+      <h2 class="font-display text-3xl font-bold text-gray-900 dark:text-white mb-8">Skills</h2>
       <div id="skills-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
     </div>
 
@@ -136,57 +161,37 @@
   <section id="contact" class="py-24 px-6">
     <div class="max-w-5xl mx-auto">
       <div class="max-w-xl">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Say Hello</h2>
+        <h2 class="font-display text-3xl font-bold text-gray-900 dark:text-white mb-3">Say Hello</h2>
         <p class="text-gray-500 dark:text-gray-400 mb-10 leading-relaxed">
           Have a project in mind, looking for a developer, or just want to connect?
           I'm currently available for freelance work and open to new opportunities.
         </p>
 
-        <form
-          name="contact"
-          method="POST"
-          data-netlify="true"
-          class="space-y-4 mb-12"
-        >
+        <form name="contact" method="POST" data-netlify="true" class="space-y-4 mb-12">
           <input type="hidden" name="form-name" value="contact" />
 
           <div class="flex flex-col sm:flex-row gap-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Your name"
-              required
-              class="flex-1 px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your email"
-              required
-              class="flex-1 px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-            />
+            <input type="text" name="name" placeholder="Your name" required
+              class="flex-1 px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" />
+            <input type="email" name="email" placeholder="Your email" required
+              class="flex-1 px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" />
           </div>
 
-          <textarea
-            name="message"
-            placeholder="What's on your mind?"
-            rows="5"
-            required
-            class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-none"
-          ></textarea>
+          <textarea name="message" placeholder="What's on your mind?" rows="5" required
+            class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-none"></textarea>
 
-          <button
-            type="submit"
-            class="group flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-indigo-500/30 hover:shadow-lg hover:-translate-y-0.5"
-          >
+          <button type="submit"
+            class="group flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-indigo-500/30 hover:shadow-lg hover:-translate-y-0.5">
             <span>Send Message</span>
             <span class="transition-transform duration-200 group-hover:translate-x-1">→</span>
           </button>
         </form>
 
         <div class="flex gap-6 text-sm text-gray-400 dark:text-gray-500">
-          <a href="https://github.com/W0506783" target="_blank" rel="noopener noreferrer" class="hover:text-gray-900 dark:hover:text-white transition-colors">GitHub</a>
-          <a href="https://www.linkedin.com/in/dylan-mackinnon-934571257/" target="_blank" rel="noopener noreferrer" class="hover:text-gray-900 dark:hover:text-white transition-colors">LinkedIn</a>
+          <a href="https://github.com/W0506783" target="_blank" rel="noopener noreferrer"
+            class="hover:text-gray-900 dark:hover:text-white transition-colors">GitHub</a>
+          <a href="https://www.linkedin.com/in/dylan-mackinnon-934571257/" target="_blank" rel="noopener noreferrer"
+            class="hover:text-gray-900 dark:hover:text-white transition-colors">LinkedIn</a>
         </div>
       </div>
 
@@ -198,4 +203,5 @@
 
   <script src="src/main.js"></script>
 </body>
+
 </html>

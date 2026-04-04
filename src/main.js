@@ -200,7 +200,7 @@ function initDarkMode() {
     toggleBtn.textContent = dark ? '☀️' : '🌙';
   }
 
-  applyTheme(localStorage.getItem('theme') === 'dark');
+  applyTheme(localStorage.getItem('theme') !== 'light');
 
   toggleBtn.addEventListener('click', () => {
     const dark = !html.classList.contains('dark');
@@ -215,6 +215,85 @@ function setYear() {
   document.getElementById('year').textContent = new Date().getFullYear();
 }
 
+// ─── Audio ────────────────────────────────────────────────────────────────────
+
+function initAudio() {
+  const tracks = [
+    'audio/song01.mp3',
+    'audio/song02.mp3',
+    'audio/song03.mp3',
+    'audio/song04.mp3',
+  ];
+
+  const muteBtn     = document.getElementById('mute-toggle');
+  const volumeSlider = document.getElementById('volume-slider');
+  const audio       = new Audio();
+  let playlist      = [];
+  let trackIndex    = 0;
+  let started       = false;
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function playNext() {
+    trackIndex++;
+    if (trackIndex >= playlist.length) {
+      playlist  = shuffle(tracks);
+      trackIndex = 0;
+    }
+    audio.src = playlist[trackIndex];
+    audio.play();
+  }
+
+  function start() {
+    if (started) return;
+    started       = true;
+    playlist      = shuffle(tracks);
+    trackIndex    = 0;
+    audio.src     = playlist[0];
+    audio.volume  = parseFloat(volumeSlider.value);
+    audio.play();
+  }
+
+  audio.addEventListener('ended', playNext);
+
+  muteBtn.addEventListener('click', () => {
+    start();
+    audio.muted    = !audio.muted;
+    muteBtn.textContent = audio.muted ? '🔇' : '🔊';
+  });
+
+  volumeSlider.addEventListener('input', () => {
+    audio.volume  = parseFloat(volumeSlider.value);
+    if (audio.muted && audio.volume > 0) {
+      audio.muted = false;
+      muteBtn.textContent = '🔊';
+    }
+  });
+
+  return start;
+}
+
+// ─── Splash ───────────────────────────────────────────────────────────────────
+
+function initSplash(onEnter) {
+  const splash   = document.getElementById('splash');
+  const enterBtn = document.getElementById('splash-enter');
+
+  enterBtn.addEventListener('click', () => {
+    onEnter();
+    splash.style.transition = 'opacity 0.5s ease';
+    splash.style.opacity    = '0';
+    setTimeout(() => splash.remove(), 500);
+  });
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
 renderProjects();
@@ -222,3 +301,6 @@ renderSkills();
 initCarousels();
 initDarkMode();
 setYear();
+
+const startAudio = initAudio();
+initSplash(startAudio);
