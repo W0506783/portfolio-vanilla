@@ -86,7 +86,7 @@ function createProjectCard(project) {
   const { title, subtitle, description, tech, links, featured, images } = project;
 
   const featuredBadge = featured
-    ? `<span class="text-xs bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 px-2 py-0.5 rounded-full shrink-0">Featured</span>`
+    ? `<span class="text-xs bg-accent-100 dark:bg-accent-900/40 text-accent-700 dark:text-accent-300 px-2 py-0.5 rounded-full shrink-0">Featured</span>`
     : '';
 
   const techPills = tech.length > 0
@@ -97,11 +97,11 @@ function createProjectCard(project) {
 
   let linksHTML = '';
   if (links.github) linksHTML += `<a href="${links.github}" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">GitHub →</a>`;
-  if (links.live)   linksHTML += `<a href="${links.live}" target="_blank" rel="noopener noreferrer" class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">Live Site →</a>`;
+  if (links.live)   linksHTML += `<a href="${links.live}" target="_blank" rel="noopener noreferrer" class="text-sm text-accent-600 dark:text-accent-400 hover:underline">Live Site →</a>`;
   if (!links.github && !links.live) linksHTML = `<span class="text-xs text-gray-400 dark:text-gray-600 italic">Links coming soon</span>`;
 
   const card = document.createElement('div');
-  card.className = `group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 flex flex-col gap-4 hover:shadow-lg transition-shadow${featured ? ' ring-2 ring-indigo-500/20' : ''}`;
+  card.className = `group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 flex flex-col gap-4 hover:shadow-lg transition-shadow${featured ? ' ring-2 ring-accent-500/20' : ''}`;
 
   card.innerHTML = `
     ${createCarouselHTML(images, title)}
@@ -109,7 +109,7 @@ function createProjectCard(project) {
       <div class="flex items-start justify-between gap-2">
         <div>
           <h3 class="font-semibold text-gray-900 dark:text-white text-lg leading-snug">${title}</h3>
-          ${subtitle ? `<p class="text-xs text-indigo-600 dark:text-indigo-400 font-medium mt-0.5">${subtitle}</p>` : ''}
+          ${subtitle ? `<p class="text-xs text-accent-600 dark:text-accent-400 font-medium mt-0.5">${subtitle}</p>` : ''}
         </div>
         ${featuredBadge}
       </div>
@@ -149,7 +149,7 @@ function renderSkills() {
     ).join('');
 
     group.innerHTML = `
-      <p class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-3">${category}</p>
+      <p class="text-xs font-semibold text-accent-600 dark:text-accent-400 uppercase tracking-wider mb-3">${category}</p>
       <div class="flex flex-wrap gap-2">${pills}</div>
     `;
 
@@ -246,7 +246,7 @@ async function loadRepos(username) {
         <div class="flex items-center justify-between text-xs text-gray-400 dark:text-gray-600">
           <span>${repo.language ?? 'Unknown'}</span>
           <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer"
-            class="text-indigo-500 hover:text-indigo-400 transition-colors">View Repo</a>
+            class="text-accent-500 hover:text-accent-400 transition-colors">View Repo</a>
         </div>
       `;
 
@@ -338,6 +338,49 @@ function initSplash(onEnter) {
   });
 }
 
+// ─── Button Spotlight ─────────────────────────────────────────────────────────
+
+function initButtonSpotlight() {
+  document.querySelectorAll('.btn-spotlight').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      btn.style.setProperty('--sx', `${e.clientX - r.left}px`);
+      btn.style.setProperty('--sy', `${e.clientY - r.top}px`);
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.setProperty('--sx', '-100px');
+      btn.style.setProperty('--sy', '-100px');
+    });
+  });
+}
+
+// ─── Theme Picker ─────────────────────────────────────────────────────────────
+
+function initTheme() {
+  const html   = document.documentElement;
+  const saved  = localStorage.getItem('theme-color') || 'emerald';
+  html.dataset.theme = saved;
+
+  function setActive(theme) {
+    document.querySelectorAll('[data-theme-btn]').forEach(btn => {
+      const active = btn.dataset.themeBtn === theme;
+      btn.classList.toggle('ring-gray-500', active);
+      btn.classList.toggle('ring-transparent', !active);
+    });
+  }
+
+  setActive(saved);
+
+  document.querySelectorAll('[data-theme-btn]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const theme = btn.dataset.themeBtn;
+      html.dataset.theme = theme;
+      localStorage.setItem('theme-color', theme);
+      setActive(theme);
+    });
+  });
+}
+
 // ─── Contact Form ─────────────────────────────────────────────────────────────
 
 function initContactForm() {
@@ -368,6 +411,8 @@ function initContactForm() {
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
+initTheme();
+initButtonSpotlight();
 renderProjects();
 renderSkills();
 initCarousels();
