@@ -338,6 +338,34 @@ function initSplash(onEnter) {
   });
 }
 
+// ─── Contact Form ─────────────────────────────────────────────────────────────
+
+function initContactForm() {
+  const form = document.getElementById('contact-form');
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const data = new FormData(form);
+
+    try {
+      await fetch('/', { method: 'POST', body: data });
+
+      form.innerHTML = `
+        <div class="py-10 text-center">
+          <p class="text-2xl mb-2">✅</p>
+          <p class="font-semibold text-gray-900 dark:text-white text-lg">Message sent!</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Thanks for reaching out — I'll get back to you soon.</p>
+        </div>
+      `;
+    } catch {
+      form.insertAdjacentHTML('beforeend', `
+        <p class="text-sm text-red-500">Something went wrong. Please try again or email me directly.</p>
+      `);
+    }
+  });
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
 renderProjects();
@@ -349,3 +377,4 @@ setYear();
 const startAudio = initAudio();
 initSplash(startAudio);
 loadRepos('W0506783');
+initContactForm();
