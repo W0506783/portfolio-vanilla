@@ -10,6 +10,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap"
     rel="stylesheet" />
   <link rel="icon" href="images/favicon.svg" />
+  <!-- Hex fallbacks for browsers without oklch support (pre-2023) -->
+  <style>
+    html                { background-color: #ffffff; color: #111827; }
+    html.dark           { background-color: #030712; color: #f9fafb; }
+    #splash             { background-color: #030712; }
+    #splash h1          { color: #ffffff; }
+    #splash p           { color: #9ca3af; }
+  </style>
   <link rel="stylesheet" href="dist/output.css" />
   <style>
     html {
